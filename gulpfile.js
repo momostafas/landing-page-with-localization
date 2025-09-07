@@ -1,5 +1,6 @@
 // Load plugins
 const { src, dest, watch, parallel, series } = require('gulp');
+const file = require('gulp-file');
 const browsersync = require('browser-sync').create();
 const fileinclude = require('gulp-file-include');
 const useref = require('gulp-useref');
@@ -118,6 +119,14 @@ function html(callback) {
 	callback();
 }
 
+// Create .nojekyll file for GitHub Pages
+function createNoJekyll(callback) {
+	src('package.json')
+		.pipe(file('.nojekyll', ''))
+		.pipe(dest(paths.dist.basedist));
+	callback();
+}
+
 // File include task for temp
 function fileincludeTask(callback) {
 	return src([paths.src.html, '!./src/partials/**/*'])
@@ -178,7 +187,7 @@ function watchTask() {
 exports.default = series(fileincludeTask, browsersyncServe, watchTask);
 
 // Build Task for Dist
-exports.build = series(parallel(cleanDist), html, images, fonts, vendorJs, copyLibs, cleanTemp);
+exports.build = series(parallel(cleanDist), html, images, fonts, vendorJs, copyLibs, createNoJekyll, cleanTemp);
 
 // export tasks
 
