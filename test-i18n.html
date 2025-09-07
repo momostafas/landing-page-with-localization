@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>i18n Test - Freshcart</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 20px; border: 1px solid #ccc; }
+        .language-buttons { margin: 10px 0; }
+        .language-buttons button { margin: 5px; padding: 10px 20px; }
+    </style>
+</head>
+<body>
+    <h1>Freshcart i18n Test Page</h1>
+    
+    <div class="language-buttons">
+        <button onclick="changeLanguage('en')">English</button>
+        <button onclick="changeLanguage('de')">Deutsch</button>
+    </div>
+    
+    <div class="test-section">
+        <h2>Navigation Test</h2>
+        <p>Home: <span data-i18n="home">Home</span></p>
+        <p>All Departments: <span data-i18n="all_departments">All Departments</span></p>
+        <p>Location: <span data-i18n="location">Location</span></p>
+        <p>Search Placeholder: <input type="search" data-i18n="search_placeholder" placeholder="Search for products" /></p>
+    </div>
+    
+    <div class="test-section">
+        <h2>Categories Test</h2>
+        <ul>
+            <li data-i18n="dairy_bread_eggs">Dairy, Bread & Eggs</li>
+            <li data-i18n="snacks_munchies">Snacks & Munchies</li>
+            <li data-i18n="fruits_vegetables">Fruits & Vegetables</li>
+            <li data-i18n="cold_drinks_juices">Cold Drinks & Juices</li>
+        </ul>
+    </div>
+    
+    <div class="test-section">
+        <h2>Cart Test</h2>
+        <p>Shop Cart: <span data-i18n="shop_cart">Shop Cart</span></p>
+        <p>Continue Shopping: <span data-i18n="continue_shopping">Continue Shopping</span></p>
+        <p>Update Cart: <span data-i18n="update_cart">Update Cart</span></p>
+        <p>Remove: <span data-i18n="remove">Remove</span></p>
+    </div>
+    
+    <div class="test-section">
+        <h2>Modal Test</h2>
+        <p>Sign Up: <span data-i18n="sign_up">Sign Up</span></p>
+        <p>Name: <input type="text" data-i18n="enter_name" placeholder="Enter Your Name" /></p>
+        <p>Email: <input type="email" data-i18n="enter_email" placeholder="Enter Email address" /></p>
+        <p>Password: <input type="password" data-i18n="enter_password" placeholder="Enter Password" /></p>
+    </div>
+    
+    <div class="test-section">
+        <h2>Language Names Test</h2>
+        <p>English: <span data-i18n="english">English</span></p>
+        <p>Deutsch: <span data-i18n="deutsch">Deutsch</span></p>
+    </div>
+
+    <!-- Include the i18n script -->
+    <script src="src/assets/js/i18n.js"></script>
+</body>
+</html>
