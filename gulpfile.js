@@ -35,6 +35,7 @@ const paths = {
 		tailwind: './src/assets/tailwind/**/*.css',
 		js: './src/assets/js/**/*.js',
 		vendorJs: './src/assets/js/vendors/*.js',
+		translations: './src/assets/js/translations/*.json',
 		html: './src/**/*.html',
 		images: './src/assets/images/**/*',
 		fonts: './src/assets/fonts/**/*',
@@ -48,6 +49,7 @@ const paths = {
 		basedist: './dist',
 		js: './dist/assets/js',
 		vendorJs: './dist/assets/js/vendors',
+		translations: './dist/assets/js/translations',
 		images: './dist/assets/images',
 		css: './dist/assets/css',
 		fonts: './dist/assets/fonts',
@@ -93,6 +95,12 @@ function images(callback) {
 // Font task
 function fonts(callback) {
 	return src(paths.src.fonts).pipe(dest(paths.dist.fonts));
+	callback();
+}
+
+// Translations task
+function translations(callback) {
+	return src(paths.src.translations).pipe(dest(paths.dist.translations));
 	callback();
 }
 
@@ -187,7 +195,7 @@ function watchTask() {
 exports.default = series(fileincludeTask, browsersyncServe, watchTask);
 
 // Build Task for Dist
-exports.build = series(parallel(cleanDist), html, images, fonts, vendorJs, copyLibs, createNoJekyll, cleanTemp);
+exports.build = series(parallel(cleanDist), html, images, fonts, translations, vendorJs, copyLibs, createNoJekyll, cleanTemp);
 
 // export tasks
 
@@ -195,6 +203,7 @@ exports.css = css;
 exports.vendorJs = vendorJs;
 exports.images = images;
 exports.fonts = fonts;
+exports.translations = translations;
 exports.html = html;
 exports.fileincludeTask = fileincludeTask;
 exports.copyLibs = copyLibs;

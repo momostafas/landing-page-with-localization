@@ -1,149 +1,65 @@
 // Simple i18n Implementation for Freshcart
-// Translation resources
-const translations = {
-  en: {
-    // Navigation
-    "home": "Home",
-    "dropdown_menu": "Dropdown Menu",
-    "mega_menu": "Mega menu",
-    "dashboard": "Dashboard",
-    "all_departments": "All Departments",
-    "location": "Location",
-    "search_placeholder": "Search for products",
-    
-    // Top bar
-    "super_value_deals": "Super Value Deals - Save more with coupons",
-    
-    // Categories
-    "dairy_bread_eggs": "Dairy, Bread & Eggs",
-    "snacks_munchies": "Snacks & Munchies",
-    "fruits_vegetables": "Fruits & Vegetables",
-    "cold_drinks_juices": "Cold Drinks & Juices",
-    "breakfast_instant_food": "Breakfast & Instant Food",
-    "bakery_biscuits": "Bakery & Biscuits",
-    "chicken_meat_fish": "Chicken, Meat & Fish",
-    
-    // Cart
-    "shop_cart": "Shop Cart",
-    "continue_shopping": "Continue Shopping",
-    "update_cart": "Update Cart",
-    "remove": "Remove",
-    "free_delivery": "You've got FREE delivery. Start",
-    "checkout_now": "checkout now!",
-    
-    // Modal
-    "sign_up": "Sign Up",
-    "name": "Name",
-    "enter_name": "Enter Your Name",
-    "email_address": "Email address",
-    "enter_email": "Enter Email address",
-    "password": "Password",
-    "enter_password": "Enter Password",
-    "terms_service": "Terms of Service",
-    "privacy_policy": "Privacy Policy",
-    "already_have_account": "Already have an account?",
-    "sign_in": "Sign in",
-    "by_signup_agree": "By Signup, you agree to our",
-    "and": "&",
-    
-    // Location Modal
-    "choose_delivery_location": "Choose your Delivery Location",
-    "enter_address_offer": "Enter your address and we will specify the offer you area.",
-    "select_location": "Select Location",
-    "clear_all": "Clear All",
-    
-    // Products
-    "haldiram_sev_bhujia": "Haldiram's Sev Bhujia",
-    "nutrichoice_digestive": "NutriChoice Digestive",
-    "cadbury_5_star": "Cadbury 5 Star Chocolate",
-    "onion_flavour_potato": "Onion Flavour Potato",
-    "salted_instant_popcorn": "Salted Instant Popcorn",
-    
-    // Common
-    "lb": "lb",
-    "kg": "kg",
-    "g": "g",
-    "min": "Min:",
-    
-    // Language names
-    "english": "English",
-    "deutsch": "Deutsch"
-  },
-  de: {
-    // Navigation
-    "home": "Startseite",
-    "dropdown_menu": "Dropdown-Menü",
-    "mega_menu": "Mega-Menü",
-    "dashboard": "Dashboard",
-    "all_departments": "Alle Abteilungen",
-    "location": "Standort",
-    "search_placeholder": "Nach Produkten suchen",
-    
-    // Top bar
-    "super_value_deals": "Super Value Deals - Sparen Sie mehr mit Gutscheinen",
-    
-    // Categories
-    "dairy_bread_eggs": "Milchprodukte, Brot & Eier",
-    "snacks_munchies": "Snacks & Knabbereien",
-    "fruits_vegetables": "Obst & Gemüse",
-    "cold_drinks_juices": "Kaltgetränke & Säfte",
-    "breakfast_instant_food": "Frühstück & Instant Food",
-    "bakery_biscuits": "Bäckerei & Kekse",
-    "chicken_meat_fish": "Huhn, Fleisch & Fisch",
-    
-    // Cart
-    "shop_cart": "Einkaufswagen",
-    "continue_shopping": "Einkauf fortsetzen",
-    "update_cart": "Warenkorb aktualisieren",
-    "remove": "Entfernen",
-    "free_delivery": "Sie haben KOSTENLOSEN Versand. Beginnen Sie",
-    "checkout_now": "jetzt mit dem Checkout!",
-    
-    // Modal
-    "sign_up": "Registrieren",
-    "name": "Name",
-    "enter_name": "Geben Sie Ihren Namen ein",
-    "email_address": "E-Mail-Adresse",
-    "enter_email": "E-Mail-Adresse eingeben",
-    "password": "Passwort",
-    "enter_password": "Passwort eingeben",
-    "terms_service": "Nutzungsbedingungen",
-    "privacy_policy": "Datenschutzrichtlinie",
-    "already_have_account": "Haben Sie bereits ein Konto?",
-    "sign_in": "Anmelden",
-    "by_signup_agree": "Mit der Registrierung stimmen Sie unseren",
-    "and": "&",
-    
-    // Location Modal
-    "choose_delivery_location": "Wählen Sie Ihren Lieferort",
-    "enter_address_offer": "Geben Sie Ihre Adresse ein und wir spezifizieren das Angebot für Ihr Gebiet.",
-    "select_location": "Standort auswählen",
-    "clear_all": "Alle löschen",
-    
-    // Products
-    "haldiram_sev_bhujia": "Haldiram's Sev Bhujia",
-    "nutrichoice_digestive": "NutriChoice Verdauung",
-    "cadbury_5_star": "Cadbury 5 Star Schokolade",
-    "onion_flavour_potato": "Zwiebel-Geschmack Kartoffel",
-    "salted_instant_popcorn": "Gesalzenes Instant-Popcorn",
-    
-    // Common
-    "lb": "Pfund",
-    "kg": "kg",
-    "g": "g",
-    "min": "Min:",
-    
-    // Language names
-    "english": "English",
-    "deutsch": "Deutsch"
-  }
+// Translation resources loaded from external JSON files
+let translations = {
+  en: {},
+  de: {}
 };
+
+// Flag to track if translations are loaded
+let translationsLoaded = false;
+
+// Function to load translation files
+async function loadTranslations() {
+  try {
+    const [enResponse, deResponse] = await Promise.all([
+      fetch('./assets/js/translations/en.json'),
+      fetch('./assets/js/translations/de.json')
+    ]);
+    
+    if (enResponse.ok && deResponse.ok) {
+      translations.en = await enResponse.json();
+      translations.de = await deResponse.json();
+      translationsLoaded = true;
+      console.log('Translations loaded successfully');
+    } else {
+      console.error('Failed to load translation files');
+      // Fallback to basic translations
+      loadFallbackTranslations();
+    }
+  } catch (error) {
+    console.error('Error loading translations:', error);
+    // Fallback to basic translations
+    loadFallbackTranslations();
+  }
+}
+
+// Fallback translations in case external files fail to load
+function loadFallbackTranslations() {
+  translations = {
+    en: {
+      "home": "Home",
+      "search_placeholder": "Search for products",
+      "english": "English",
+      "deutsch": "Deutsch"
+    },
+    de: {
+      "home": "Startseite", 
+      "search_placeholder": "Nach Produkten suchen",
+      "english": "English",
+      "deutsch": "Deutsch"
+    }
+  };
+  translationsLoaded = true;
+}
 
 // Current language
 let currentLanguage = localStorage.getItem('language') || 'en';
 
 // Helper function to get translation
 function t(key) {
+  if (!translationsLoaded) {
+    return key; // Return key if translations not loaded yet
+  }
   return translations[currentLanguage][key] || translations['en'][key] || key;
 }
 
@@ -216,8 +132,13 @@ window.t = t;
 window.updateTranslations = updateTranslations;
 
 // Initialize translations when DOM is loaded
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   console.log('DOM loaded, initializing translations...'); // Debug log
+  
+  // Load translations first
+  await loadTranslations();
+  
+  // Then update the page
   updateTranslations();
   
   // Set initial language display
