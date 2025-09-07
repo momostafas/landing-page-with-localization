@@ -2,13 +2,13 @@
     "name": "freshcart-tailwind-ecommerce-html-template",
     "version": "1.0.0",
     "description": "Download Free Freshcart Tailwind Ecommerce HTML Template",
-    "homepage": "themewagon.github.io/freshcart",
+    "homepage": "https://momostafas.github.io/landing-page-with-localization",
     "main": "index.js",
     "scripts": {
         "dev": "gulp",
         "build": "gulp build",
         "predeploy": "npm run build",
-        "deploy": "gh-pages -d out",
+        "deploy": "gh-pages -d dist",
         "format": "npx prettier --write .",
         "tailwind-viewer": "tailwind-config-viewer -o"
     },
